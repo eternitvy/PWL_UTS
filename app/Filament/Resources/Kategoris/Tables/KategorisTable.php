@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
 
 class KategorisTable
 {
@@ -14,6 +15,10 @@ class KategorisTable
         return $table
             ->columns([
                 //
+                TextColumn::make('kategori_nama')
+                    ->label('Nama Kategori'),
+                TextColumn::make('kategori_kode')
+                    ->label('Kode Kategori'),
             ])
             ->filters([
                 //

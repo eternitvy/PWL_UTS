@@ -7,6 +7,7 @@ use App\Filament\Resources\Penjualans\Pages\EditPenjualan;
 use App\Filament\Resources\Penjualans\Pages\ListPenjualans;
 use App\Filament\Resources\Penjualans\Schemas\PenjualanForm;
 use App\Filament\Resources\Penjualans\Tables\PenjualansTable;
+use App\Filament\Resources\Penjualans\Tables\ViewAction;
 use App\Models\Penjualan;
 use BackedEnum;
 use Filament\Resources\Resource;

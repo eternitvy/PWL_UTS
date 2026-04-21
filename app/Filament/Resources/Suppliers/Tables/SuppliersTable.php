@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
 
 class SuppliersTable
 {
@@ -14,6 +15,12 @@ class SuppliersTable
         return $table
             ->columns([
                 //
+                TextColumn::make('supplier_nama')
+                    ->label('Nama Supplier'),
+                TextColumn::make('supplier_kode')
+                    ->label('Kode Supplier'),
+                TextColumn::make('supplier_alamat')
+                    ->label('Alamat Supplier'),
             ])
             ->filters([
                 //

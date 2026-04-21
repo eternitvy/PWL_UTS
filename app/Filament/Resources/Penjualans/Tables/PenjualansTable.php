@@ -26,17 +26,15 @@ class PenjualansTable
                     ->money('idr')
                     ->state(fn ($record) => $record->penjualan_detail->sum(fn($d) => $d->harga * $d->jumlah)),
             ])
-            ->actions([
+            ->recordActions([
                 ViewAction::make()
                     ->label('View Detail')
                     ->modalHeading('Rincian Belanja')
                     ->modalContent(fn ($record) => view('filament.resources.penjualan.view', [
                         'record' => $record,
-                    ]))
-                    ->form([])
-                    ->modalSubmitAction(false),
-            ])
-            ->recordActions([
+                        ]))
+                        ->form([])
+                        ->modalSubmitAction(false),
                 EditAction::make(),
             ])
             ->toolbarActions([

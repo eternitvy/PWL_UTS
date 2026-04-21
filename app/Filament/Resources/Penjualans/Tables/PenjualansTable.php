@@ -5,6 +5,9 @@ namespace App\Filament\Resources\Penjualans\Tables;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 
 class PenjualansTable
 {
@@ -30,7 +33,16 @@ class PenjualansTable
                     ->modalContent(fn ($record) => view('filament.resources.penjualan.view', [
                         'record' => $record,
                     ]))
+                    ->form([])
                     ->modalSubmitAction(false),
+            ])
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
             ]);
     }
 }

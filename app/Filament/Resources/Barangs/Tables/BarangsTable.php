@@ -17,18 +17,18 @@ class BarangsTable
             ->columns([
                 ImageColumn::make('image') 
                     ->label('Foto')
-                    ->disk('public') 
-                    ->circular(),
+                    ->disk('public')
+                    ->square(),
                 TextColumn::make('kategori.kategori_nama')
-                    ->label('Kategori'), 
+                ->label('Kategori'), 
                 TextColumn::make('barang_kode')
-                    ->label('Kode'),
+                ->label('Kode'),
                 TextColumn::make('barang_nama')
-                    ->label('Nama'),
+                ->label('Nama'),
                 TextColumn::make('harga_beli')
-                    ->label('Harga Beli'),
+                ->label('Harga Beli'),
                 TextColumn::make('harga_jual')
-                    ->label('Harga Jual'),
+                ->label('Harga Jual'),
                 
             ])
             ->filters([

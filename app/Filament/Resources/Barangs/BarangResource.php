@@ -25,6 +25,7 @@ class BarangResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return BarangForm::configure($schema);
+        
     }
 
     public static function table(Table $table): Table

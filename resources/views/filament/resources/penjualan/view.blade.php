@@ -1,66 +1,67 @@
-<div class="p-6 bg-white dark:bg-gray-900 shadow-sm rounded-xl">
-    <div class="flex flex-col md:flex-row justify-between mb-8 pb-6 border-b border-gray-100 dark:border-gray-800">
+<div class="max-w-3xl mx-auto p-8 bg-white dark:bg-gray-900 shadow-xl rounded-2xl border border-gray-100 dark:border-gray-800">
+    <div class="flex flex-col md:flex-row justify-between items-start mb-10 pb-8 border-b-2 border-dashed border-gray-200 dark:border-gray-700">
         <div>
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Detail Penjualan</h2>
-            <p class="text-sm text-gray-500 mt-1 uppercase tracking-wider font-semibold">
-                ID Transaksi: {{ $record->penjualan_kode }}
-            </p>
+            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Rincian Belanja</h2>
+            <div class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 uppercase tracking-widest">
+                ID: {{ $record->penjualan_kode }}
+            </div>
         </div>
-        <div class="mt-4 md:mt-0 md:text-right">
-            <p class="text-sm text-gray-600 dark:text-gray-400">
-                <span class="font-medium">Pembeli:</span> {{ $record->pembeli }}
+        <div class="mt-6 md:mt-0 space-y-1 text-left md:text-right">
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold text-gray-700 dark:text-gray-200">Pembeli:</span> {{ $record->pembeli }}
             </p>
-            <p class="text-sm text-gray-600 dark:text-gray-400">
-                <span class="font-medium">Tanggal:</span> {{ \Carbon\Carbon::parse($record->penjualan_tanggal)->format('d F Y, H:i') }}
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold text-gray-700 dark:text-gray-200">Tanggal:</span> {{ \Carbon\Carbon::parse($record->penjualan_tanggal)->format('d M Y, H:i') }}
             </p>
-            <p class="text-sm text-gray-600 dark:text-gray-400 uppercase">
-                <span class="font-medium">Kasir:</span> {{ $record->user->name ?? $record->user->nama ?? '-' }}
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold text-gray-700 dark:text-gray-200">Kasir:</span> {{ $record->user->name ?? $record->user->nama ?? '-' }}
             </p>
         </div>
     </div>
 
-    <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
+    <div class="overflow-hidden">
+        <table class="w-full text-left border-separate border-spacing-y-2">
             <thead>
-                <tr class="bg-gray-50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300">
-                    <th class="p-4 border-b border-gray-100 dark:border-gray-800 font-semibold">Nama Barang</th>
-                    <th class="p-4 border-b border-gray-100 dark:border-gray-800 text-right font-semibold">Harga Satuan</th>
-                    <th class="p-4 border-b border-gray-100 dark:border-gray-800 text-center font-semibold">Jumlah</th>
-                    <th class="p-4 border-b border-gray-100 dark:border-gray-800 text-right font-semibold">Subtotal</th>
+                <tr class="text-gray-400 text-xs uppercase tracking-widest font-bold">
+                    <th class="px-4 py-3">Barang</th>
+                    <th class="px-4 py-3 text-center">Harga</th>
+                    <th class="px-4 py-3 text-center">Qty</th>
+                    <th class="px-4 py-3 text-right">Total</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+            <tbody class="text-sm">
                 @foreach($record->penjualan_detail as $item)
-                <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors">
-                    <td class="p-4 text-gray-800 dark:text-gray-200">
+                <tr class="bg-gray-50 dark:bg-gray-800/40 rounded-lg overflow-hidden group hover:bg-gray-100 dark:hover:bg-gray-800 transition-all">
+                    <td class="px-4 py-4 font-semibold text-gray-800 dark:text-gray-100 rounded-l-xl">
                         {{ $item->barang->barang_nama ?? 'Barang tidak ditemukan' }}
                     </td>
-                    <td class="p-4 text-right text-gray-600 dark:text-gray-400">
+                    <td class="px-4 py-4 text-center text-gray-600 dark:text-gray-400">
                         Rp {{ number_format($item->harga, 0, ',', '.') }}
                     </td>
-                    <td class="p-4 text-center font-medium text-gray-800 dark:text-gray-200">
+                    <td class="px-4 py-4 text-center font-medium text-gray-800 dark:text-gray-200">
                         {{ $item->jumlah }}
                     </td>
-                    <td class="p-4 text-right font-semibold text-gray-900 dark:text-white">
+                    <td class="px-4 py-4 text-right font-bold text-gray-900 dark:text-white rounded-r-xl">
                         Rp {{ number_format($item->harga * $item->jumlah, 0, ',', '.') }}
                     </td>
                 </tr>
                 @endforeach
             </tbody>
-            <tfoot>
-                <tr class="bg-primary-50/30 dark:bg-primary-900/10">
-                    <td colspan="3" class="p-4 text-right font-bold text-gray-700 dark:text-gray-300 uppercase tracking-tight">
-                        Total Keseluruhan
-                    </td>
-                    <td class="p-4 text-right text-xl font-black text-primary-600 dark:text-primary-400">
-                        Rp {{ number_format($record->penjualan_detail->sum(fn($d) => $d->harga * $d->jumlah), 0, ',', '.') }}
-                    </td>
-                </tr>
-            </tfoot>
         </table>
     </div>
 
-    <div class="mt-8 pt-4 border-t border-gray-100 dark:border-gray-800 text-center">
-        <p class="text-xs text-gray-400 italic">Terima kasih telah melakukan transaksi.</p>
+    <div class="mt-10 p-6 bg-gray-900 dark:bg-white rounded-2xl text-white dark:text-gray-900 shadow-lg">
+        <div class="flex justify-between items-center">
+            <span class="text-sm font-bold uppercase tracking-[0.2em] opacity-80">Total Keseluruhan</span>
+            <span class="text-3xl font-black italic">
+                Rp {{ number_format($record->penjualan_detail->sum(fn($d) => $d->harga * $d->jumlah), 0, ',', '.') }}
+            </span>
+        </div>
+    </div>
+
+    <div class="mt-10 text-center">
+        <div class="inline-block px-6 py-2 border-t border-gray-100 dark:border-gray-800">
+            <p class="text-sm text-gray-400 italic">Terima kasih telah melakukan transaksi di toko kami.</p>
+        </div>
     </div>
 </div>

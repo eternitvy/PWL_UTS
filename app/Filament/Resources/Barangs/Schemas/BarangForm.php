@@ -42,8 +42,9 @@ class BarangForm
                                 Group::make([
                                     FileUpload::make('image')
                                         ->label('Foto Barang')
-                                        ->image()
-                                        ->directory('barang-images'),
+                                        ->disk('public')
+                                        ->directory('barangs'),
+                                        
                                 ])->columnSpan(1),
                             ])->columns(2),
                         ]),

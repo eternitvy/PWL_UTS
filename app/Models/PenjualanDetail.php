@@ -14,7 +14,7 @@ class PenjualanDetail extends Model
         'penjualan_id',
         'barang_id',
         'jumlah',
-        'harga_jual',
+        'harga',
     ];
 
     public function penjualan()

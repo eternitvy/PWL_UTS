@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\Penjualans\Tables;
 
-use Filament\Tables\Table;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class PenjualansTable
 {
@@ -13,22 +14,23 @@ class PenjualansTable
             ->columns([
                 TextColumn::make('penjualan_kode')->label('Kode')->searchable(),
                 TextColumn::make('pembeli')->label('Pembeli'),
-        
-                TextColumn::make('lihat_detail')
-                    ->label('Aksi')
-                    ->default('Lihat Detail')
-                    ->color('primary')
-                    ->weight('bold')
-                    ->icon('heroicon-m-eye')
-                    ->action(function ($record) {
-                        return \Filament\Tables\Actions\ViewAction::make()
-                            ->modalContent(view('filament.resources.penjualan.view', ['record' => $record]));
-                    }),
-
+                TextColumn::make('user.name')->label('Kasir'),
+                TextColumn::make('penjualan_tanggal')->label('Tanggal')->dateTime(),
+                
+                // Menghitung Total Harga secara otomatis
                 TextColumn::make('total_harga')
                     ->label('Total Harga')
                     ->money('idr')
                     ->state(fn ($record) => $record->penjualan_detail->sum(fn($d) => $d->harga * $d->jumlah)),
+            ])
+            ->actions([
+                ViewAction::make()
+                    ->label('View Detail')
+                    ->modalHeading('Rincian Belanja')
+                    ->modalContent(fn ($record) => view('filament.resources.penjualan.view', [
+                        'record' => $record,
+                    ]))
+                    ->modalSubmitAction(false),
             ]);
     }
 }

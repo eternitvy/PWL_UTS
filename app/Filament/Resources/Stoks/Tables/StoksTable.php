@@ -2,10 +2,8 @@
 
 namespace App\Filament\Resources\Stoks\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
 
 class StoksTable
 {
@@ -13,18 +11,36 @@ class StoksTable
     {
         return $table
             ->columns([
-                //
+                // Menampilkan Nama Supplier dari relasi
+                TextColumn::make('supplier.supplier_nama')
+                    ->label('Supplier')
+                    ->sortable()
+                    ->searchable(),
+
+                // Menampilkan Nama Barang dari relasi
+                TextColumn::make('barang.barang_nama')
+                    ->label('Barang')
+                    ->sortable()
+                    ->searchable(),
+
+                // Menampilkan Nama User dari relasi
+                TextColumn::make('user.nama')
+                    ->label('Petugas')
+                    ->sortable(),
+
+                TextColumn::make('stok_jumlah')
+                    ->label('Jumlah')
+                    ->alignCenter()
+                    ->badge()
+                    ->color('success'),
+
+                TextColumn::make('stok_tanggal')
+                    ->label('Tanggal')
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
-                //
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                // Tambahkan filter jika diperlukan
             ]);
     }
 }
